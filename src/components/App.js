@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppRouter from "components/Router";
 import { authService } from "fbase";
+import styled from "styled-components";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -43,7 +44,7 @@ function App() {
   };
 
   return (
-    <>
+    <Container>
       {init ? (
         <AppRouter
           refreshUser={refreshUser}
@@ -53,9 +54,21 @@ function App() {
       ) : (
         "Initializing..."
       )}
-      <footer>&copy; {new Date().getFullYear()} twitter</footer>
-    </>
+      <Footer>&copy; {new Date().getFullYear()} twitter</Footer>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  text-align: center;
+  margin: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Footer = styled.footer`
+  color: ${(props) => props.theme.lightColor};
+  padding-top: 100px;
+`;
 export default App;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 
 const TweetFactory = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -52,8 +53,8 @@ const TweetFactory = ({ userObj }) => {
   const onClearAttachmentClick = () => setAttachment(null);
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
+    <Form onSubmit={onSubmit}>
+      <ContentInput
         value={tweet}
         onChange={onChange}
         type="text"
@@ -68,8 +69,25 @@ const TweetFactory = ({ userObj }) => {
           <button onClick={onClearAttachmentClick}>Clear</button>
         </div>
       )}
-    </form>
+    </Form>
   );
 };
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+`;
+const ContentInput = styled.input`
+  background-color: ${(props) => props.theme.backColor};
+  border: 1px solid ${(props) => props.theme.lightColor};
+  border-radius: 30px;
+  padding: 15px;
+  margin: 10px;
+  &::placeholder {
+    color: white;
+    font-style: italic;
+  }
+`;
 
 export default TweetFactory;

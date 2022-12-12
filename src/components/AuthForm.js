@@ -1,10 +1,11 @@
-import { authService } from "fbase";
 import React, { useState } from "react";
+import { authService } from "fbase";
+import styled from "styled-components";
 
 const AuthForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [newAccount, setNewAccount] = useState(true);
+  const [newAccount, setNewAccount] = useState(false);
   const [error, setError] = useState("");
 
   const onChange = (event) => {
@@ -41,31 +42,62 @@ const AuthForm = () => {
   const toggleAccount = () => setNewAccount((prev) => !prev);
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input
+    <Container>
+      <Form onSubmit={onSubmit}>
+        <Input
           name="email"
           type="text"
           placeholder="Email"
           required
           value={email}
           onChange={onChange}
-        ></input>
-        <input
+        ></Input>
+        <Input
           name="password"
           type="password"
           placeholder="Password"
           required
           value={password}
           onChange={onChange}
-        ></input>
-        <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+        ></Input>
+        <SubmitBtn
+          type="submit"
+          value={newAccount ? "Create Account" : "Log In"}
+        />
         {error ? error : ""}
-      </form>
-      <span onClick={toggleAccount}>
+      </Form>
+      <Toggle onClick={toggleAccount}>
         {newAccount ? "Sign In" : "Create Account"}
-      </span>
-    </>
+      </Toggle>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+const Input = styled.input`
+  border: none;
+  border-radius: 30px;
+  padding: 15px;
+  margin: 10px;
+`;
+
+const SubmitBtn = styled(Input)`
+  border: 1px solid ${(props) => props.theme.lightColor};
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.lightColor};
+`;
+
+const Toggle = styled.span`
+  padding: 10px;
+  color: ${(props) => props.theme.lightColor};
+  text-decoration: underline;
+  cursor: pointer;
+`;
 export default AuthForm;

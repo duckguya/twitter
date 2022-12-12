@@ -3,8 +3,6 @@ import { authService, firebaseInstance } from "fbase";
 import AuthForm from "components/AuthForm";
 import styled from "styled-components";
 
-const Container = styled.div``;
-
 const Auth = () => {
   const onSocialClick = async (event) => {
     const {
@@ -20,18 +18,37 @@ const Auth = () => {
   };
 
   return (
-    <div>
+    <Container>
       <AuthForm />
-      <div>
-        <button onClick={onSocialClick} name="google">
+      <ButtonWrapper>
+        <Button onClick={onSocialClick} name="google">
           Continue with Google
-        </button>
-        <button onClick={onSocialClick} name="github">
+        </Button>
+        <Button onClick={onSocialClick} name="github">
           Continue with GitHub
-        </button>
-      </div>
-    </div>
+        </Button>
+      </ButtonWrapper>
+    </Container>
   );
 };
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+`;
+
+const Button = styled.button`
+  border-radius: 30px;
+  padding: 10px;
+  border: 1px solid ${(props) => props.theme.lightColor};
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.lightColor};
+`;
 
 export default Auth;

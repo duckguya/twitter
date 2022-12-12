@@ -1,9 +1,10 @@
 /* eslint-disable */
+import React, { useEffect, useState } from "react";
+import { dbService, storageService } from "fbase";
 import Tweet from "components/Tweet";
 import TweetFactory from "components/TweetFactory";
-import { dbService, storageService } from "fbase";
-import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 
 const Home = ({ userObj }) => {
   const [tweets, setTweets] = useState([]);
@@ -20,19 +21,29 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <Container>
       <TweetFactory userObj={userObj} />
-      <div>
+      <TweetList>
         {tweets.map((tweet, index) => (
           <Tweet
             key={tweet.id}
             tweetObj={tweet}
-            isOwner={tweet.createdId === userObj.uid}
+            isOwner={tweet.creatorId === userObj.uid}
           />
         ))}
-      </div>
-    </div>
+      </TweetList>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+`;
+const TweetList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export default Home;
