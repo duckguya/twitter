@@ -11,6 +11,7 @@ export default ({ userObj, refreshUser }) => {
     authService.signOut();
     // navigate("/");
     navigate("/", { replace: true });
+
     // Router에서 Navigate 대신 useNaviagte를 사용할 수도 있다.
   };
 
