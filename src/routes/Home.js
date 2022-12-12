@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   useEffect(() => {
     // onSnapshot : 실시간으로 db데이터를 가져올 수 있다.
@@ -33,7 +33,7 @@ const Home = ({ userObj }) => {
     const tweetObj = {
       text: tweet,
       createdAt: Date.now(),
-      createdId: userObj.uid,
+      creatorId: userObj.uid,
       attachmentUrl,
     };
     await dbService.collection("tweets").add(tweetObj);

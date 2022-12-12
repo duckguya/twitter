@@ -15,16 +15,39 @@ function App() {
     authService.onAuthStateChanged((user) => {
       if (user) {
         // setIsLoggedIn(true);
-        setUserObj(user);
+        /*
+         setUserObj(user) -> 이렇게 하지않고 밑에처럼 하는 이유는 
+         오브젝트가(user) 너무 크기때문에 업데이트 감지를 못하면서 재랜더링이 안된다.
+         때문에 오브젝트의 양을 줄여주는 방법으로 바꿔준다.
+         */
+
+        setUserObj({
+          displayName: user.displayName || user.email.split("@")[0],
+          uid: user.uid,
+          updateProfile: (args) => user.updateProfile(args),
+        });
       }
       setInit(true);
     });
   }, []);
 
+  const refreshUser = () => {
+    const user = authService.currentUser;
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  };
+
   return (
     <>
       {init ? (
-        <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)}
+          userObj={userObj}
+        />
       ) : (
         "Initializing..."
       )}
