@@ -82,6 +82,7 @@ const Input = styled.input`
   border-radius: 30px;
   padding: 15px;
   margin-bottom: 5px;
+  text-align: center;
 `;
 const EditBtn = styled(Input)`
   background-color: ${(props) => props.theme.accentColor};
