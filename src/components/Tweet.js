@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
-const Tweet = ({ tweetObj, isOwner }) => {
+const Tweet = ({ tweetObj, isOwner, userObj }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObj.text);
 
@@ -62,6 +62,7 @@ const Tweet = ({ tweetObj, isOwner }) => {
         <TweetListWrapper>
           {tweetObj.attachmentUrl && <Img src={tweetObj.attachmentUrl} />}
           <Content>{tweetObj.text}</Content>
+          <UserImg src={userObj.photoURL} />
           {isOwner && (
             <BtnWrapper>
               <span onClick={onDeleteClick}>
@@ -90,7 +91,7 @@ const Content = styled.div`
   /* background-color: ${(props) => props.theme.white.lighter}; */
   color: ${(props) => props.theme.black.darker};
   padding: 15px;
-  margin: 10px;
+  margin: 20px 0;
   width: 100%;
 `;
 
@@ -99,11 +100,18 @@ const Img = styled.img`
   max-width: 50px;
   max-height: 50px;
   position: absolute;
-  left: 10px;
-  top: 9px;
+  left: 0;
+  top: 19px;
   border-radius: 10px;
 `;
-
+const UserImg = styled.img`
+  max-width: 50px;
+  max-height: 50px;
+  position: absolute;
+  right: -17px;
+  top: 35px;
+  border-radius: 50px;
+`;
 const BtnWrapper = styled.div`
   position: absolute;
   right: 10px;
