@@ -11,13 +11,16 @@ const Home = ({ userObj }) => {
 
   useEffect(() => {
     // onSnapshot : 실시간으로 db데이터를 가져올 수 있다.
-    dbService.collection("tweets").onSnapshot((snapshot) => {
-      const tweetArray = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setTweets(tweetArray);
-    });
+    dbService
+      .collection("tweets")
+      .orderBy("createdAt", "desc")
+      .onSnapshot((snapshot) => {
+        const tweetArray = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setTweets(tweetArray);
+      });
   }, []);
 
   return (
