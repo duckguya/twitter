@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Tweet = ({ tweetObj, isOwner }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -58,12 +60,16 @@ const Tweet = ({ tweetObj, isOwner }) => {
         </>
       ) : (
         <TweetListWrapper>
-          <Content>{tweetObj.text}</Content>
           {tweetObj.attachmentUrl && <Img src={tweetObj.attachmentUrl} />}
+          <Content>{tweetObj.text}</Content>
           {isOwner && (
             <BtnWrapper>
-              <UpdateBtn onClick={onDeleteClick}>Del</UpdateBtn>
-              <UpdateBtn onClick={toggleEditing}>Edit</UpdateBtn>
+              <span onClick={onDeleteClick}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleEditing}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
             </BtnWrapper>
           )}
         </TweetListWrapper>
@@ -75,53 +81,52 @@ const Tweet = ({ tweetObj, isOwner }) => {
 const TweetListWrapper = styled.div`
   display: flex;
   justify-content: space-around;
+  position: relative;
 `;
 
 const Content = styled.div`
-  border: 1px solid ${(props) => props.theme.lightColor};
+  border: 1px solid ${(props) => props.theme.black.darker};
   border-radius: 10px;
-  background-color: ${(props) => props.theme.lightColor};
-  color: #363636;
+  /* background-color: ${(props) => props.theme.white.lighter}; */
+  color: ${(props) => props.theme.black.darker};
   padding: 15px;
   margin: 10px;
-  /* top: 47px; */
+  width: 100%;
 `;
 
 const Img = styled.img`
+  /* transform-origin: left center; */
   max-width: 50px;
   max-height: 50px;
+  position: absolute;
+  left: 10px;
+  top: 9px;
+  border-radius: 10px;
 `;
 
 const BtnWrapper = styled.div`
-  display: flex;
-  z-index: 2;
-  right: 205px;
+  position: absolute;
+  right: 10px;
+  top: 25px;
   cursor: pointer;
-`;
-
-const UpdateBtn = styled.div`
-  border: 1px solid #131313;
-  border-radius: 10px;
-  background-color: ${(props) => props.theme.lightColor};
-  color: #363636;
-  padding: 5px;
-  cursor: pointer;
+  span {
+    margin-right: 10px;
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   &:first-child {
-    border: none;
     border-radius: 10px;
-    background-color: ${(props) => props.theme.lightColor};
+    border: 1px solid ${(props) => props.theme.black.darker};
     color: #363636;
-    padding: 30px;
+    padding: 10px;
   }
 `;
 const EditInput = styled.input`
   border: 1px solid #131313;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 15px;
   margin-bottom: 5px;
 `;
@@ -130,7 +135,8 @@ const FormBtn = styled.input`
   border-radius: 20px;
   padding: 5px;
   margin-top: 5px;
-  color: ${(props) => props.theme.lightColor};
+  color: ${(props) => props.theme.white.lighter};
+  cursor: pointer;
 `;
 const FormUpdateBtn = styled(FormBtn)`
   background-color: ${(props) => props.theme.accentColor};

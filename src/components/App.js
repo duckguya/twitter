@@ -68,7 +68,7 @@ const Container = styled.div`
 `;
 
 const Footer = styled.footer`
-  color: ${(props) => props.theme.lightColor};
+  color: ${(props) => props.theme.white.darker};
   padding-top: 100px;
 `;
 export default App;

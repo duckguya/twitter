@@ -64,7 +64,7 @@ const AuthForm = () => {
           type="submit"
           value={newAccount ? "Create Account" : "Log In"}
         />
-        {error ? error : ""}
+        {<ErrorText>{error ? error : ""}</ErrorText>}
       </Form>
       <Toggle onClick={toggleAccount}>
         {newAccount ? "Sign In" : "Create Account"}
@@ -82,22 +82,27 @@ const Form = styled.form`
   flex-direction: column;
 `;
 const Input = styled.input`
-  border: none;
+  border: 1px solid ${(props) => props.theme.accentColor};
   border-radius: 30px;
   padding: 15px;
   margin: 10px;
 `;
 
 const SubmitBtn = styled(Input)`
-  border: 1px solid ${(props) => props.theme.lightColor};
+  border: 1px solid ${(props) => props.theme.white.lighter};
   background-color: ${(props) => props.theme.accentColor};
-  color: ${(props) => props.theme.lightColor};
+  color: ${(props) => props.theme.white.lighter};
 `;
 
 const Toggle = styled.span`
   padding: 10px;
-  color: ${(props) => props.theme.lightColor};
+  color: ${(props) => props.theme.black.darker};
   text-decoration: underline;
+  font-size: 14px;
   cursor: pointer;
+`;
+
+const ErrorText = styled.span`
+  color: #ff4b4b;
 `;
 export default AuthForm;

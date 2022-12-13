@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = ({ userObj }) => {
   // const [userName, setUserName] = useState(
@@ -11,10 +14,28 @@ const Navigation = ({ userObj }) => {
     <Nav>
       <Ul>
         <Li>
-          <Link to="/">Home</Link>
+          <Link to="/" style={{ marginRight: 10 }}>
+            <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
+          </Link>
         </Li>
         <Li>
-          <Link to="/profile">{userObj.displayName}님의 Profile</Link>
+          <Link
+            to="/profile"
+            style={{
+              marginLeft: 10,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              fontSize: 12,
+            }}
+          >
+            <FontAwesomeIcon icon={faUser} color={"#04AAFF"} size="2x" />
+            <span style={{ marginTop: 10 }}>
+              {userObj.displayName
+                ? `${userObj.displayName}의 Profile`
+                : "Profile"}
+            </span>
+          </Link>
         </Li>
       </Ul>
     </Nav>
@@ -33,7 +54,7 @@ const Li = styled.li`
   list-style-type: none;
   a {
     text-decoration: none;
-    color: ${(props) => props.theme.lightColor};
+    color: ${(props) => props.theme.black.darker};
   }
 `;
 

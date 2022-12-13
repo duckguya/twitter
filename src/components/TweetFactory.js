@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const TweetFactory = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -9,6 +11,9 @@ const TweetFactory = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    if (tweet === "") {
+      return;
+    }
     let attachmentUrl = "";
     if (attachment !== "") {
       const attachmentRef = storageService
@@ -54,15 +59,31 @@ const TweetFactory = ({ userObj }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      <ContentInput
-        value={tweet}
-        onChange={onChange}
-        type="text"
-        placeholder="What's on your mind?"
-        maxLength={120}
+      <ContentWrapper>
+        <ContentInput
+          value={tweet}
+          onChange={onChange}
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={120}
+        />
+        <ContentSubmit type="submit" value="&rarr;" />
+      </ContentWrapper>
+
+      <label for="attach-file">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
+      <input
+        id="attach-file"
+        type="file"
+        accept="image/*"
+        onChange={onFileChange}
+        style={{
+          opacity: 0,
+        }}
       />
-      <input type="file" accept="image/*" onChange={onFileChange} />
-      <input type="submit" value="Tweet" />
+
       {attachment && (
         <div>
           <img src={attachment} widt="50px" height="50px" />
@@ -77,17 +98,47 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
+  label {
+    cursor: pointer;
+    color: ${(props) => props.theme.accentColor};
+    font-size: 12px;
+  }
+`;
+const ContentWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  position: relative;
+  margin-bottom: 20px;
+  width: 100%;
 `;
 const ContentInput = styled.input`
-  background-color: ${(props) => props.theme.backColor};
-  border: 1px solid ${(props) => props.theme.lightColor};
-  border-radius: 30px;
-  padding: 15px;
-  margin: 10px;
+  flex-grow: 1;
+  height: 40px;
+  padding: 0px 20px;
+  color: ${(props) => props.theme.black.darker};
+  border: 1px solid ${(props) => props.theme.accentColor};
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 12px;
   &::placeholder {
     color: white;
     font-style: italic;
   }
+`;
+const ContentSubmit = styled.input`
+  position: absolute;
+  right: 0;
+  border: none;
+  background-color: ${(props) => props.theme.accentColor};
+  height: 40px;
+  width: 40px;
+  padding: 10px 0px;
+  text-align: center;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
 `;
 
 export default TweetFactory;

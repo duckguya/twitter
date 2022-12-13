@@ -78,15 +78,15 @@ const Form = styled.form`
   flex-direction: column;
 `;
 const Input = styled.input`
-  border: none;
+  border: 1px solid ${(props) => props.theme.accentColor};
   border-radius: 30px;
   padding: 15px;
   margin-bottom: 5px;
 `;
 const EditBtn = styled(Input)`
-  background-color: ${(props) => props.theme.lightColor};
-  color: ${(props) => props.theme.accentColor};
-  padding: 5px;
+  background-color: ${(props) => props.theme.accentColor};
+  color: ${(props) => props.theme.white.lighter};
+  padding: 10px;
   cursor: pointer;
 `;
 
@@ -100,7 +100,7 @@ const LogOutBtn = styled.button`
   border: none;
   border-radius: 30px;
   background-color: tomato;
-  color: ${(props) => props.theme.lightColor};
+  color: ${(props) => props.theme.white.lighter};
   padding: 5px;
   cursor: pointer;
 `;
