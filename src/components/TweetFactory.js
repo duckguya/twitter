@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { upload } from "utils/upload";
 
 const TweetFactory = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -16,11 +17,7 @@ const TweetFactory = ({ userObj }) => {
     }
     let attachmentUrl = "";
     if (attachment !== "") {
-      const attachmentRef = storageService
-        .ref()
-        .child(`${userObj.uid}/${uuidv4()}`);
-      const response = await attachmentRef.putString(attachment, "data_url");
-      attachmentUrl = await response.ref.getDownloadURL();
+      attachmentUrl = await upload({ uid: userObj.uid, attachment });
     }
     const tweetObj = {
       text: tweet,
@@ -40,6 +37,7 @@ const TweetFactory = ({ userObj }) => {
     setTweet(value);
   };
 
+  // 사진 미리보기
   const onFileChange = (event) => {
     const {
       target: { files },
@@ -47,12 +45,13 @@ const TweetFactory = ({ userObj }) => {
     const theFile = files[0];
     const reader = new FileReader();
     reader.onloadend = (finishedEvent) => {
+      // 2
       const {
         currentTarget: { result },
       } = finishedEvent;
       setAttachment(result);
     };
-    reader.readAsDataURL(theFile);
+    reader.readAsDataURL(theFile); // 1 파일읽기
   };
 
   const onClearAttachmentClick = () => setAttachment(null);

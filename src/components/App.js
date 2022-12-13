@@ -21,10 +21,11 @@ function App() {
          오브젝트가(user) 너무 크기때문에 업데이트 감지를 못하면서 재랜더링이 안된다.
          때문에 오브젝트의 양을 줄여주는 방법으로 바꿔준다.
          */
-
         setUserObj({
           displayName: user.displayName || user.email.split("@")[0],
           uid: user.uid,
+          email: user.email || "",
+          photoURL: user.photoURL || "",
           updateProfile: (args) => user.updateProfile(args),
         });
       } else {
@@ -39,6 +40,8 @@ function App() {
     setUserObj({
       displayName: user.displayName,
       uid: user.uid,
+      email: user.email,
+      photoURL: user.photoURL,
       updateProfile: (args) => user.updateProfile(args),
     });
   };
@@ -68,7 +71,7 @@ const Container = styled.div`
 `;
 
 const Footer = styled.footer`
-  color: ${(props) => props.theme.white.darker};
+  color: ${(props) => props.theme.black.lighter};
   padding-top: 100px;
 `;
 export default App;

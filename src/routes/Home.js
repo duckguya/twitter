@@ -42,7 +42,7 @@ const Home = ({ userObj }) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 80%;
 `;
 const TweetList = styled.div`
   display: flex;
