@@ -114,8 +114,8 @@ const UserImg = styled.img`
 `;
 const BtnWrapper = styled.div`
   position: absolute;
-  right: 10px;
-  top: 25px;
+  right: 21px;
+  top: 36px;
   cursor: pointer;
   span {
     margin-right: 10px;

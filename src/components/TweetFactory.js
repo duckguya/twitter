@@ -3,7 +3,7 @@ import { dbService, storageService } from "fbase";
 import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { upload } from "utils/upload";
 
 const TweetFactory = ({ userObj }) => {
@@ -59,6 +59,17 @@ const TweetFactory = ({ userObj }) => {
   return (
     <Form onSubmit={onSubmit}>
       <ContentWrapper>
+        {attachment && (
+          <AttachmentWapper>
+            <Attachment src={attachment} />
+            <FontAwesomeIcon
+              icon={faXmark}
+              onClick={onClearAttachmentClick}
+              style={{ paddingLeft: "5px" }}
+              color="tomato"
+            />
+          </AttachmentWapper>
+        )}
         <ContentInput
           value={tweet}
           onChange={onChange}
@@ -82,13 +93,6 @@ const TweetFactory = ({ userObj }) => {
           opacity: 0,
         }}
       />
-
-      {attachment && (
-        <div>
-          <img src={attachment} widt="50px" height="50px" />
-          <button onClick={onClearAttachmentClick}>Clear</button>
-        </div>
-      )}
     </Form>
   );
 };
@@ -115,7 +119,7 @@ const ContentWrapper = styled.div`
 const ContentInput = styled.input`
   flex-grow: 1;
   height: 40px;
-  padding: 0px 20px;
+  padding: 0px 20px 0 70px;
   color: ${(props) => props.theme.black.darker};
   border: 1px solid ${(props) => props.theme.accentColor};
   border-radius: 20px;
@@ -137,6 +141,19 @@ const ContentSubmit = styled.input`
   text-align: center;
   border-radius: 20px;
   color: white;
+  cursor: pointer;
+`;
+
+const Attachment = styled.img`
+  border-radius: 10px;
+  height: 40px;
+  width: 40px;
+  /* position: absolute; */
+`;
+const AttachmentWapper = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
   cursor: pointer;
 `;
 

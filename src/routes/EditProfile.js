@@ -80,7 +80,7 @@ export default ({ userObj, refreshUser }) => {
                 widt="50px"
                 height="50px"
                 style={{
-                  border: "2px solid #04AAFF",
+                  // border: "2px solid #04AAFF",
                   borderRadius: "100px",
                   // padding: "10px",
                   width: "80px",
