@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { authService, dbService } from "fbase";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,15 +10,18 @@ import { upload } from "utils/upload";
 
 export default ({ userObj, refreshUser }) => {
   const navigate = useNavigate();
-  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+  // const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [attachment, setAttachment] = useState("");
+  const { register, handleSubmit } = useForm({
+    defaultValues: { displayName: userObj.displayName },
+  });
 
-  const onChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-    setNewDisplayName(value);
-  };
+  // const onChange = (e) => {
+  //   const {
+  //     target: { value },
+  //   } = e;
+  //   setNewDisplayName(value);
+  // };
 
   const getMyTweets = async () => {
     const tweets = await dbService
@@ -52,26 +56,26 @@ export default ({ userObj, refreshUser }) => {
     reader.readAsDataURL(theFile); // 1 파일읽기
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    // e.preventDefault();
     let attachmentUrl = "";
     if (attachment !== "") {
       attachmentUrl = await upload({ uid: userObj.uid, attachment });
     }
 
-    if (userObj.displayName !== newDisplayName) {
-      await userObj.updateProfile({
-        displayName: newDisplayName,
-        photoURL: attachmentUrl,
-      });
-      setAttachment("");
-      refreshUser();
-    }
+    // if (userObj.displayName !== newDisplayName) {
+    await userObj.updateProfile({
+      displayName: data.displayName,
+      photoURL: attachmentUrl,
+    });
+    setAttachment("");
+    refreshUser();
+    // }
   };
 
   return (
     <Container>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <UserWrapper>
           <PhotoWrapper>
             {userObj.photoURL ? (
@@ -122,10 +126,11 @@ export default ({ userObj, refreshUser }) => {
           </PhotoWrapper>
           <InfoWrapper>
             <InfoName
-              onChange={onChange}
-              type="text"
+              {...register("displayName", { minLength: 2 })}
               placeholder="Display name"
-              value={newDisplayName}
+              // onChange={onChange}
+              type="text"
+              // value={newDisplayName}
               autoFocus
             />
             <InfoEmail>{userObj.email}</InfoEmail>
